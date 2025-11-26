@@ -262,7 +262,7 @@ export const WarningPopup = ({ open, onOpenChange }: WarningPopupProps) => {
                   htmlFor="commitment" 
                   className="text-sm cursor-pointer leading-relaxed"
                 >
-                  Tôi cam kết các thông tin khai báo là chính xác. Nếu có sai lệch, tôi hoàn toàn chịu trách nhiệm với BCA.
+                  Tôi cam kết các thông tin khai báo là chính xác. Nếu có sai lệch, tôi hoàn toàn chịu trách nhiệm với BCA. gggg
                 </label>
               </div>
 
