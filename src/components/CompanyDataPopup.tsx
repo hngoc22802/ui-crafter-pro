@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { X, Search, Plus, FileDown, Printer, Info, RefreshCw } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
+import { VehicleExcelImportPopup } from "./VehicleExcelImportPopup";
 
 interface CompanyDataPopupProps {
   open: boolean;
@@ -23,6 +24,7 @@ export const CompanyDataPopup = ({ open, onOpenChange, type, defaultTab = "compa
   const [showQuickAddPopup, setShowQuickAddPopup] = useState(false);
   const [showEditCompanyPopup, setShowEditCompanyPopup] = useState(false);
   const [showEditVehiclePopup, setShowEditVehiclePopup] = useState(false);
+  const [showVehicleExcelImport, setShowVehicleExcelImport] = useState(false);
 
   useEffect(() => {
     if (open) {
@@ -324,7 +326,7 @@ export const CompanyDataPopup = ({ open, onOpenChange, type, defaultTab = "compa
                     </Button>
                     <Button 
                       className="bg-primary hover:bg-primary/90 text-primary-foreground"
-                      onClick={() => setShowQuickAddPopup(true)}
+                      onClick={() => setShowVehicleExcelImport(true)}
                     >
                       <Plus className="h-4 w-4 mr-2" />
                       Thêm nhanh bằng Excel
@@ -511,6 +513,12 @@ export const CompanyDataPopup = ({ open, onOpenChange, type, defaultTab = "compa
           <p className="text-muted-foreground">Nội dung sửa phương tiện...</p>
         </DialogContent>
       </Dialog>
+
+      {/* Vehicle Excel Import Popup */}
+      <VehicleExcelImportPopup 
+        open={showVehicleExcelImport} 
+        onOpenChange={setShowVehicleExcelImport}
+      />
     </>
   );
 };
