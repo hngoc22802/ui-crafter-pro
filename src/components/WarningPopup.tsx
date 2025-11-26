@@ -133,7 +133,6 @@ export const WarningPopup = ({ open, onOpenChange }: WarningPopupProps) => {
                   variant="default"
                   className="h-20 flex-col gap-1 min-w-[180px] bg-success hover:bg-success/90"
                   onClick={() => {
-                    setCompanyDataType("vehicle");
                     setShowCompanyDataPopup(true);
                   }}
                 >
@@ -301,6 +300,7 @@ export const WarningPopup = ({ open, onOpenChange }: WarningPopupProps) => {
       open={showCompanyDataPopup}
       onOpenChange={setShowCompanyDataPopup}
       type={companyDataType}
+      defaultTab="vehicle"
     />
     </>
   );
