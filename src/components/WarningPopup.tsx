@@ -6,6 +6,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Checkbox } from "@/components/ui/checkbox";
 import { Factory, Car, Pin, X, CheckCircle2, AlertTriangle, Search } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
+import { CompanyDataPopup } from "./CompanyDataPopup";
 
 interface WarningPopupProps {
   open: boolean;
@@ -20,6 +21,8 @@ export const WarningPopup = ({ open, onOpenChange }: WarningPopupProps) => {
   const [isCommitted, setIsCommitted] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [tableTransportType, setTableTransportType] = useState("Xe tải (Truyền CCS)");
+  const [showCompanyDataPopup, setShowCompanyDataPopup] = useState(false);
+  const [companyDataType, setCompanyDataType] = useState<"company" | "vehicle">("company");
 
   const handleSave = () => {
     if (!isCommitted) {
@@ -37,6 +40,7 @@ export const WarningPopup = ({ open, onOpenChange }: WarningPopupProps) => {
   };
 
   return (
+    <>
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-[980px] p-0 bg-background overflow-hidden">
         {/* Header */}
@@ -113,6 +117,10 @@ export const WarningPopup = ({ open, onOpenChange }: WarningPopupProps) => {
                 <Button 
                   variant="destructive"
                   className="h-20 flex-col gap-1 min-w-[180px]"
+                  onClick={() => {
+                    setCompanyDataType("company");
+                    setShowCompanyDataPopup(true);
+                  }}
                 >
                   <span className="text-2xl font-bold">2</span>
                   <div className="flex items-center gap-2">
@@ -124,6 +132,10 @@ export const WarningPopup = ({ open, onOpenChange }: WarningPopupProps) => {
                 <Button 
                   variant="default"
                   className="h-20 flex-col gap-1 min-w-[180px] bg-success hover:bg-success/90"
+                  onClick={() => {
+                    setCompanyDataType("vehicle");
+                    setShowCompanyDataPopup(true);
+                  }}
                 >
                   <CheckCircle2 className="h-6 w-6" />
                   <div className="flex items-center gap-2">
@@ -141,8 +153,8 @@ export const WarningPopup = ({ open, onOpenChange }: WarningPopupProps) => {
               {/* Filters */}
               <div className="flex gap-4 items-center">
                 <Select value={vehicleType} onValueChange={setVehicleType}>
-                  <SelectTrigger className="w-[200px]">
-                    <SelectValue placeholder="Chọn Loại phương tiện" className="text-muted-foreground" />
+                  <SelectTrigger className={`w-[200px] ${!vehicleType ? 'text-muted-foreground' : ''}`}>
+                    <SelectValue placeholder="Chọn Loại phương tiện" />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="xe-khach">Xe khách</SelectItem>
@@ -152,8 +164,8 @@ export const WarningPopup = ({ open, onOpenChange }: WarningPopupProps) => {
                 </Select>
 
                 <Select value={transportType} onValueChange={setTransportType}>
-                  <SelectTrigger className="w-[250px]">
-                    <SelectValue placeholder="Chọn Loại hình vận tải" className="text-muted-foreground" />
+                  <SelectTrigger className={`w-[250px] ${!transportType ? 'text-muted-foreground' : ''}`}>
+                    <SelectValue placeholder="Chọn Loại hình vận tải" />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="truyen-ccs">Xe tải (Truyền CCS)</SelectItem>
@@ -162,8 +174,8 @@ export const WarningPopup = ({ open, onOpenChange }: WarningPopupProps) => {
                 </Select>
 
                 <Select value={licensePlate} onValueChange={setLicensePlate}>
-                  <SelectTrigger className="w-[200px]">
-                    <SelectValue placeholder="Chọn Biển kiểm soát" className="text-muted-foreground" />
+                  <SelectTrigger className={`w-[200px] ${!licensePlate ? 'text-muted-foreground' : ''}`}>
+                    <SelectValue placeholder="Chọn Biển kiểm soát" />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="00A17795">00A17795</SelectItem>
@@ -284,5 +296,12 @@ export const WarningPopup = ({ open, onOpenChange }: WarningPopupProps) => {
         </Tabs>
       </DialogContent>
     </Dialog>
+
+    <CompanyDataPopup 
+      open={showCompanyDataPopup}
+      onOpenChange={setShowCompanyDataPopup}
+      type={companyDataType}
+    />
+    </>
   );
 };
