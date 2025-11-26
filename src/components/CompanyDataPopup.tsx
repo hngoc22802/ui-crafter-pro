@@ -4,10 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { X, Search, Plus, FileDown, Printer, Info, RefreshCw } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
-<<<<<<< HEAD
 import { CompanyExcelImportPopup } from "./CompanyExcelImportPopup";
-=======
->>>>>>> bf14225adddaf0df2250d655013b27d7f3c00dbf
 import { VehicleExcelImportPopup } from "./VehicleExcelImportPopup";
 
 interface CompanyDataPopupProps {
@@ -28,10 +25,7 @@ export const CompanyDataPopup = ({ open, onOpenChange, type, defaultTab = "compa
   const [showQuickAddPopup, setShowQuickAddPopup] = useState(false);
   const [showEditCompanyPopup, setShowEditCompanyPopup] = useState(false);
   const [showEditVehiclePopup, setShowEditVehiclePopup] = useState(false);
-<<<<<<< HEAD
   const [showCompanyExcelImport, setShowCompanyExcelImport] = useState(false);
-=======
->>>>>>> bf14225adddaf0df2250d655013b27d7f3c00dbf
   const [showVehicleExcelImport, setShowVehicleExcelImport] = useState(false);
 
   useEffect(() => {
