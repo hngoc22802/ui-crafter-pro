@@ -109,14 +109,14 @@ export const WarningPopup = ({ open, onOpenChange }: WarningPopupProps) => {
               <h3 className="font-semibold">Danh sách thông tin khai báo thiếu [2]</h3>
               <p className="text-sm text-muted-foreground">Click vào ô đỏ để khai báo thông tin còn thiếu</p>
               
-              <div className="flex gap-4">
+              <div className="flex gap-4 items-center">
                 <Button 
                   variant="destructive"
                   className="h-20 flex-col gap-1 min-w-[180px]"
                 >
                   <span className="text-2xl font-bold">2</span>
                   <div className="flex items-center gap-2">
-                    <Factory className="h-4 w-4" />
+                    <Factory className="h-6 w-6" />
                     <span>Doanh nghiệp</span>
                   </div>
                 </Button>
@@ -127,7 +127,7 @@ export const WarningPopup = ({ open, onOpenChange }: WarningPopupProps) => {
                 >
                   <CheckCircle2 className="h-6 w-6" />
                   <div className="flex items-center gap-2">
-                    <Car className="h-4 w-4" />
+                    <Car className="h-6 w-6" />
                     <span>Phương tiện</span>
                   </div>
                 </Button>
@@ -142,7 +142,7 @@ export const WarningPopup = ({ open, onOpenChange }: WarningPopupProps) => {
               <div className="flex gap-4 items-center">
                 <Select value={vehicleType} onValueChange={setVehicleType}>
                   <SelectTrigger className="w-[200px]">
-                    <SelectValue placeholder="Chọn Loại phương tiện" />
+                    <SelectValue placeholder="Chọn Loại phương tiện" className="text-muted-foreground" />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="xe-khach">Xe khách</SelectItem>
@@ -153,7 +153,7 @@ export const WarningPopup = ({ open, onOpenChange }: WarningPopupProps) => {
 
                 <Select value={transportType} onValueChange={setTransportType}>
                   <SelectTrigger className="w-[250px]">
-                    <SelectValue placeholder="Chọn Loại hình vận tải" />
+                    <SelectValue placeholder="Chọn Loại hình vận tải" className="text-muted-foreground" />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="truyen-ccs">Xe tải (Truyền CCS)</SelectItem>
@@ -163,7 +163,7 @@ export const WarningPopup = ({ open, onOpenChange }: WarningPopupProps) => {
 
                 <Select value={licensePlate} onValueChange={setLicensePlate}>
                   <SelectTrigger className="w-[200px]">
-                    <SelectValue placeholder="Chọn Biển kiểm soát" />
+                    <SelectValue placeholder="Chọn Biển kiểm soát" className="text-muted-foreground" />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="00A17795">00A17795</SelectItem>
@@ -172,7 +172,7 @@ export const WarningPopup = ({ open, onOpenChange }: WarningPopupProps) => {
                   </SelectContent>
                 </Select>
 
-                <Button variant="default" size="icon" className="shrink-0">
+                <Button variant="default" size="icon" className="shrink-0 bg-primary hover:bg-primary/90">
                   <Search className="h-4 w-4" />
                 </Button>
               </div>
@@ -194,7 +194,7 @@ export const WarningPopup = ({ open, onOpenChange }: WarningPopupProps) => {
                       <td className="px-4 py-3">1</td>
                       <td className="px-4 py-3">
                         <button 
-                          className="text-primary hover:underline font-medium"
+                          className="text-[#0066CC] hover:underline font-medium"
                           onClick={() => toast({ title: "Chuyển đến tab Sửa phương tiện" })}
                         >
                           00A17795
@@ -255,7 +255,7 @@ export const WarningPopup = ({ open, onOpenChange }: WarningPopupProps) => {
               </div>
 
               {/* Action Buttons */}
-              <div className="flex gap-3 justify-end">
+              <div className="flex gap-3 justify-center">
                 <Button 
                   variant="destructive"
                   onClick={handleSave}
