@@ -50,9 +50,7 @@ export const CompanyDataPopup = ({ open, onOpenChange, type }: CompanyDataPopupP
             <button className="bg-warning text-warning-foreground px-6 py-3 font-semibold">
               1. Thông tin doanh nghiệp
             </button>
-            <button className="bg-muted/30 px-6 py-3">2. Thông tin lái xe</button>
-            <button className="bg-muted/30 px-6 py-3">3. Thông tin phương tiện</button>
-            <button className="bg-muted/30 px-6 py-3">4. Dữ liệu hình ảnh</button>
+            <button className="bg-muted/30 px-6 py-3">2. Thông tin phương tiện</button>
           </div>
 
           {/* Content */}
@@ -103,39 +101,16 @@ export const CompanyDataPopup = ({ open, onOpenChange, type }: CompanyDataPopupP
 
             {/* Action Buttons */}
             <div className="flex gap-3 items-center">
-              <Button className="bg-success hover:bg-success/90 text-success-foreground">
+              <Button className="bg-primary hover:bg-primary/90">
                 <Plus className="h-4 w-4 mr-2" />
                 Thêm công ty
               </Button>
               <Button 
-                className="bg-success hover:bg-success/90 text-success-foreground"
+                className="bg-primary hover:bg-primary/90"
                 onClick={() => setShowQuickAddPopup(true)}
               >
                 <Plus className="h-4 w-4 mr-2" />
                 Thêm nhanh bằng Excel
-              </Button>
-              <div className="relative">
-                <Button 
-                  className="bg-success hover:bg-success/90 text-success-foreground"
-                  onClick={() => setShowExportMenu(!showExportMenu)}
-                >
-                  <FileDown className="h-4 w-4 mr-2" />
-                  Xuất file
-                </Button>
-                {showExportMenu && (
-                  <div className="absolute top-full left-0 mt-1 bg-background border rounded-md shadow-lg z-50 min-w-[120px]">
-                    <button className="w-full px-4 py-2 text-left hover:bg-muted transition-colors">
-                      Excel
-                    </button>
-                    <button className="w-full px-4 py-2 text-left hover:bg-muted transition-colors">
-                      PDF
-                    </button>
-                  </div>
-                )}
-              </div>
-              <Button className="bg-primary hover:bg-primary/90">
-                <Printer className="h-4 w-4 mr-2" />
-                In
               </Button>
             </div>
 
@@ -144,29 +119,26 @@ export const CompanyDataPopup = ({ open, onOpenChange, type }: CompanyDataPopupP
               <table className="w-full">
                 <thead className="bg-warning text-warning-foreground">
                   <tr>
-                    <th className="px-4 py-3 text-left font-semibold">STT</th>
-                    <th className="px-4 py-3 text-left font-semibold">
-                      Tên công ty (*)
-                      <span className="text-yellow-300 ml-1">⚠</span>
-                    </th>
-                    <th className="px-4 py-3 text-left font-semibold">
+                    <th className="px-4 py-3 text-left font-semibold w-16">STT</th>
+                    <th className="px-4 py-3 text-left font-semibold w-64">Tên công ty (*)</th>
+                    <th className="px-4 py-3 text-left font-semibold w-40">
                       Mã số thuế (*)
                       <span className="text-yellow-300 ml-1">⚠</span>
                     </th>
-                    <th className="px-4 py-3 text-left font-semibold">
+                    <th className="px-4 py-3 text-left font-semibold w-40">
                       Số điện thoại (*)
                       <span className="text-yellow-300 ml-1">⚠</span>
                     </th>
-                    <th className="px-4 py-3 text-left font-semibold">Địa chỉ</th>
-                    <th className="px-4 py-3 text-left font-semibold">Ngày cập nhật</th>
-                    <th className="px-4 py-3 text-left font-semibold">Trạng thái gửi DL</th>
-                    <th className="px-4 py-3 text-left font-semibold">Chi tiết</th>
+                    <th className="px-4 py-3 text-left font-semibold w-48">Địa chỉ</th>
+                    <th className="px-4 py-3 text-left font-semibold w-44">Ngày cập nhật</th>
+                    <th className="px-4 py-3 text-left font-semibold w-32">Trạng thái gửi DL</th>
+                    <th className="px-4 py-3 text-left font-semibold w-20">Chi tiết</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr className="border-t hover:bg-muted/50">
                     <td className="px-4 py-3">1</td>
-                    <td className="px-4 py-3 bg-warning/20">Viettel Tuyên Quang</td>
+                    <td className="px-4 py-3">Viettel Tuyên Quang</td>
                     <td className="px-4 py-3 bg-warning/20"></td>
                     <td className="px-4 py-3 bg-warning/20"></td>
                     <td className="px-4 py-3">Tuyên Quang</td>
@@ -183,6 +155,33 @@ export const CompanyDataPopup = ({ open, onOpenChange, type }: CompanyDataPopupP
                   </tr>
                 </tbody>
               </table>
+            </div>
+
+            {/* Export and Print Buttons */}
+            <div className="flex gap-3 justify-end">
+              <div className="relative">
+                <Button 
+                  className="bg-warning hover:bg-warning/90 text-warning-foreground"
+                  onClick={() => setShowExportMenu(!showExportMenu)}
+                >
+                  <FileDown className="h-4 w-4 mr-2" />
+                  Xuất file
+                </Button>
+                {showExportMenu && (
+                  <div className="absolute top-full right-0 mt-1 bg-background border rounded-md shadow-lg z-50 min-w-[120px]">
+                    <button className="w-full px-4 py-2 text-left hover:bg-muted transition-colors">
+                      Excel
+                    </button>
+                    <button className="w-full px-4 py-2 text-left hover:bg-muted transition-colors">
+                      PDF
+                    </button>
+                  </div>
+                )}
+              </div>
+              <Button className="bg-warning hover:bg-warning/90 text-warning-foreground">
+                <Printer className="h-4 w-4 mr-2" />
+                In
+              </Button>
             </div>
 
             {/* Pagination */}
