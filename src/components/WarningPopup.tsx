@@ -100,34 +100,34 @@ export const WarningPopup = ({ open, onOpenChange }: WarningPopupProps) => {
               <h3 className="font-semibold">Danh sách thông tin khai báo thiếu [2]</h3>
               <p className="text-sm text-muted-foreground">Click vào ô đỏ để khai báo thông tin còn thiếu</p>
               
-              <div className="flex gap-4 items-center">
+              <div className="flex gap-6 items-center justify-center">
                 <Button 
                   variant="destructive"
-                  className="h-32 flex-col gap-2 min-w-[220px]"
+                  className="h-44 flex-col gap-3 min-w-[280px]"
                   onClick={() => {
                     setCompanyDataType("company");
                     setShowCompanyDataPopup(true);
                   }}
                 >
-                  <span className="text-4xl font-bold">2</span>
-                  <div className="flex items-center gap-3">
-                    <Factory className="h-8 w-8" />
-                    <span className="text-lg">Doanh nghiệp</span>
+                  <span className="text-6xl font-bold">2</span>
+                  <div className="flex items-center gap-4">
+                    <Factory className="h-12 w-12" />
+                    <span className="text-2xl">Doanh nghiệp</span>
                   </div>
                 </Button>
                 
                 <Button 
                   variant="default"
-                  className="h-32 flex-col gap-2 min-w-[220px] bg-success hover:bg-success/90"
+                  className="h-44 flex-col gap-3 min-w-[280px] bg-success hover:bg-success/90"
                   onClick={() => {
                     setCompanyDataType("vehicle");
                     setShowCompanyDataPopup(true);
                   }}
                 >
-                  <CheckCircle2 className="h-8 w-8" />
-                  <div className="flex items-center gap-3">
-                    <Car className="h-8 w-8" />
-                    <span className="text-lg">Phương tiện</span>
+                  <CheckCircle2 className="h-12 w-12" />
+                  <div className="flex items-center gap-4">
+                    <Car className="h-12 w-12" />
+                    <span className="text-2xl">Phương tiện</span>
                   </div>
                 </Button>
               </div>
