@@ -3,8 +3,7 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Factory, Car, Pin, X, CheckCircle2, AlertTriangle, Search } from "lucide-react";
+import { Factory, Car, Pin, X, CheckCircle2, AlertTriangle } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { CompanyDataPopup } from "./CompanyDataPopup";
 
@@ -15,24 +14,12 @@ interface WarningPopupProps {
 
 export const WarningPopup = ({ open, onOpenChange }: WarningPopupProps) => {
   const [isPinned, setIsPinned] = useState(false);
-  const [vehicleType, setVehicleType] = useState("");
-  const [transportType, setTransportType] = useState("");
-  const [licensePlate, setLicensePlate] = useState("");
-  const [isCommitted, setIsCommitted] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [tableTransportType, setTableTransportType] = useState("Xe tải (Truyền CCS)");
   const [showCompanyDataPopup, setShowCompanyDataPopup] = useState(false);
   const [companyDataType, setCompanyDataType] = useState<"company" | "vehicle">("company");
 
   const handleSave = () => {
-    if (!isCommitted) {
-      toast({
-        title: "Vui lòng xác nhận cam kết",
-        description: "Bạn cần tích vào ô cam kết trước khi lưu",
-        variant: "destructive",
-      });
-      return;
-    }
     setShowSuccessMessage(true);
     setTimeout(() => {
       setShowSuccessMessage(false);
@@ -149,45 +136,6 @@ export const WarningPopup = ({ open, onOpenChange }: WarningPopupProps) => {
             {/* Vehicle List Section */}
             <div className="space-y-4">
               <h3 className="font-semibold">Danh sách xe truyền Cục CSGT</h3>
-              
-              {/* Filters */}
-              <div className="flex gap-4 items-center">
-                <Select value={vehicleType} onValueChange={setVehicleType}>
-                  <SelectTrigger className={`w-[200px] ${!vehicleType ? 'text-muted-foreground' : ''}`}>
-                    <SelectValue placeholder="Chọn Loại phương tiện" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="xe-khach">Xe khách</SelectItem>
-                    <SelectItem value="xe-tai">Xe tải</SelectItem>
-                    <SelectItem value="xe-dien">Xe điện</SelectItem>
-                  </SelectContent>
-                </Select>
-
-                <Select value={transportType} onValueChange={setTransportType}>
-                  <SelectTrigger className={`w-[250px] ${!transportType ? 'text-muted-foreground' : ''}`}>
-                    <SelectValue placeholder="Chọn Loại hình vận tải" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="truyen-ccs">Xe tải (Truyền CCS)</SelectItem>
-                    <SelectItem value="khong-truyen">Xe tải (Không truyền CCS)</SelectItem>
-                  </SelectContent>
-                </Select>
-
-                <Select value={licensePlate} onValueChange={setLicensePlate}>
-                  <SelectTrigger className={`w-[200px] ${!licensePlate ? 'text-muted-foreground' : ''}`}>
-                    <SelectValue placeholder="Chọn Biển kiểm soát" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="00A17795">00A17795</SelectItem>
-                    <SelectItem value="00C-54092">00C-54092</SelectItem>
-                    <SelectItem value="00C10000">00C10000</SelectItem>
-                  </SelectContent>
-                </Select>
-
-                <Button variant="default" size="icon" className="shrink-0 bg-primary hover:bg-primary/90">
-                  <Search className="h-4 w-4" />
-                </Button>
-              </div>
 
               {/* Data Table */}
               <div className="border rounded-lg overflow-hidden">
@@ -248,22 +196,6 @@ export const WarningPopup = ({ open, onOpenChange }: WarningPopupProps) => {
                   </Select>
                   <span>dòng mỗi trang</span>
                 </div>
-              </div>
-
-              {/* Commitment Checkbox */}
-              <div className="flex items-start gap-3 p-4 bg-muted/30 rounded-lg">
-                <Checkbox 
-                  id="commitment"
-                  checked={isCommitted}
-                  onCheckedChange={(checked) => setIsCommitted(checked as boolean)}
-                  className="mt-1"
-                />
-                <label 
-                  htmlFor="commitment" 
-                  className="text-sm cursor-pointer leading-relaxed"
-                >
-                  Tôi cam kết các thông tin khai báo là chính xác. Nếu có sai lệch, tôi hoàn toàn chịu trách nhiệm với BCA.
-                </label>
               </div>
 
               {/* Action Buttons */}

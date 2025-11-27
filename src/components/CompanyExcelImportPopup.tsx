@@ -10,7 +10,6 @@ interface CompanyExcelImportPopupProps {
 }
 
 export const CompanyExcelImportPopup = ({ open, onOpenChange }: CompanyExcelImportPopupProps) => {
-  const [Company, setCompany] = useState("");
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -40,54 +39,42 @@ export const CompanyExcelImportPopup = ({ open, onOpenChange }: CompanyExcelImpo
 
         {/* Content */}
         <div className="p-6 space-y-6">
-          {/* Filters and File Upload */}
-          <div className="flex gap-4 items-center flex-wrap">
-            <Select value={Company} onValueChange={setCompany}>
-              <SelectTrigger className={`w-[200px] ${!Company ? 'text-muted-foreground' : ''}`}>
-                <SelectValue placeholder="Chọn Công ty" />
+          {/* File Upload */}
+          <div className="flex items-center gap-3">
+            <Select defaultValue="">
+              <SelectTrigger className="w-[200px] text-muted-foreground">
+                <SelectValue placeholder="Chọn file excel" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="Viettel Telecom">Viettel Telecom</SelectItem>
-                <SelectItem value="Viettel Tuyên Quang">Viettel Tuyên Quang</SelectItem>
+                <SelectItem value="file1">File x</SelectItem>
               </SelectContent>
             </Select>
 
-            <div className="flex items-center gap-3">
-              <Select defaultValue="">
-                <SelectTrigger className="w-[200px] text-muted-foreground">
-                  <SelectValue placeholder="Chọn file excel" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="file1">File x</SelectItem>
-                </SelectContent>
-              </Select>
-
-              <label htmlFor="file-upload">
-                <Button 
-                  className="bg-primary hover:bg-primary/90 text-primary-foreground"
-                  onClick={() => document.getElementById('file-upload')?.click()}
-                  type="button"
-                >
-                  Chọn file
-                </Button>
-                <input
-                  id="file-upload"
-                  type="file"
-                  accept=".xlsx,.xls"
-                  className="hidden"
-                  onChange={handleFileChange}
-                />
-              </label>
-
-              <span className="text-sm text-muted-foreground">(Tối đa 2MB)</span>
-
+            <label htmlFor="file-upload">
               <Button 
-                variant="outline" 
-                className="border-primary text-primary hover:bg-primary/10"
+                className="bg-primary hover:bg-primary/90 text-primary-foreground"
+                onClick={() => document.getElementById('file-upload')?.click()}
+                type="button"
               >
-                Tải mẫu Excel
+                Chọn file
               </Button>
-            </div>
+              <input
+                id="file-upload"
+                type="file"
+                accept=".xlsx,.xls"
+                className="hidden"
+                onChange={handleFileChange}
+              />
+            </label>
+
+            <span className="text-sm text-muted-foreground">(Tối đa 2MB)</span>
+
+            <Button 
+              variant="outline" 
+              className="border-primary text-primary hover:bg-primary/10"
+            >
+              Tải mẫu Excel
+            </Button>
           </div>
 
           {/* Data Table */}

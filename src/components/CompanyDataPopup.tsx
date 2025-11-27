@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { X, Search, Plus, FileDown, Printer, Info, RefreshCw } from "lucide-react";
+import { Checkbox } from "@/components/ui/checkbox";
+import { X, FileDown, FileUp, Info, RefreshCw } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { CompanyExcelImportPopup } from "./CompanyExcelImportPopup";
 import { VehicleExcelImportPopup } from "./VehicleExcelImportPopup";
@@ -16,17 +17,11 @@ interface CompanyDataPopupProps {
 
 export const CompanyDataPopup = ({ open, onOpenChange, type, defaultTab = "company" }: CompanyDataPopupProps) => {
   const [activeTab, setActiveTab] = useState<"company" | "vehicle">(defaultTab);
-  const [company, setCompany] = useState("");
-  const [vehicleType, setVehicleType] = useState("");
-  const [transportType, setTransportType] = useState("");
-  const [licensePlate, setLicensePlate] = useState("");
-  const [status, setStatus] = useState("");
-  const [showExportMenu, setShowExportMenu] = useState(false);
-  const [showQuickAddPopup, setShowQuickAddPopup] = useState(false);
   const [showEditCompanyPopup, setShowEditCompanyPopup] = useState(false);
   const [showEditVehiclePopup, setShowEditVehiclePopup] = useState(false);
   const [showCompanyExcelImport, setShowCompanyExcelImport] = useState(false);
   const [showVehicleExcelImport, setShowVehicleExcelImport] = useState(false);
+  const [isCommitted, setIsCommitted] = useState(false);
 
   useEffect(() => {
     if (open) {
@@ -35,6 +30,14 @@ export const CompanyDataPopup = ({ open, onOpenChange, type, defaultTab = "compa
   }, [open, defaultTab]);
 
   const handleSave = () => {
+    if (!isCommitted) {
+      toast({
+        title: "Vui lòng xác nhận cam kết",
+        description: "Bạn cần tích vào ô cam kết trước khi lưu",
+        variant: "destructive",
+      });
+      return;
+    }
     toast({
       title: "Lưu thành công",
       description: "Dữ liệu đã được cập nhật",
@@ -103,77 +106,19 @@ export const CompanyDataPopup = ({ open, onOpenChange, type, defaultTab = "compa
                   </p>
                 </div>
 
-                {/* Filters */}
-                <div className="flex gap-4 items-center">
-                  <Select value={company} onValueChange={setCompany}>
-                    <SelectTrigger className={`w-[250px] ${!company ? 'text-muted-foreground' : ''}`}>
-                      <SelectValue placeholder="Chọn Công ty" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="viettel-telecom">Viettel Telecom</SelectItem>
-                      <SelectItem value="viettel-tuyen-quang">Viettel Tuyên Quang</SelectItem>
-                    </SelectContent>
-                  </Select>
-
-                  <Select value={status} onValueChange={setStatus}>
-                    <SelectTrigger className={`w-[250px] ${!status ? 'text-muted-foreground' : ''}`}>
-                      <SelectValue placeholder="Chọn Trạng thái khai báo" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="tat-ca">Tất cả</SelectItem>
-                      <SelectItem value="thieu-thong-tin">Thiếu thông tin</SelectItem>
-                      <SelectItem value="du-thong-tin">Đủ thông tin</SelectItem>
-                    </SelectContent>
-                  </Select>
-
-                  <Button className="bg-primary hover:bg-primary/90 text-primary-foreground px-6">
-                    <Search className="h-4 w-4 mr-2" />
-                    Tìm kiếm
-                  </Button>
-                </div>
-
                 {/* Action Buttons */}
-                <div className="flex gap-3 items-center justify-between">
-                  <div className="flex gap-3">
-                    <Button className="bg-primary hover:bg-primary/90 text-primary-foreground">
-                      <Plus className="h-4 w-4 mr-2" />
-                      Thêm công ty
-                    </Button>
-                    <Button 
-                      className="bg-primary hover:bg-primary/90 text-primary-foreground"
-                      onClick={() => setShowCompanyExcelImport(true)}
-                    >
-                      <Plus className="h-4 w-4 mr-2" />
-                      Thêm nhanh bằng Excel
-                    </Button>
-                  </div>
-                  
-                  {/* Export and Print Buttons */}
-                  <div className="flex gap-3">
-                    <div className="relative">
-                      <Button 
-                        className="bg-warning hover:bg-warning/90 text-warning-foreground"
-                        onClick={() => setShowExportMenu(!showExportMenu)}
-                      >
-                        <FileDown className="h-4 w-4 mr-2" />
-                        Xuất file
-                      </Button>
-                      {showExportMenu && (
-                        <div className="absolute top-full right-0 mt-1 bg-background border rounded-md shadow-lg z-50 min-w-[120px]">
-                          <button className="w-full px-4 py-2 text-left hover:bg-muted transition-colors">
-                            Excel
-                          </button>
-                          <button className="w-full px-4 py-2 text-left hover:bg-muted transition-colors">
-                            PDF
-                          </button>
-                        </div>
-                      )}
-                    </div>
-                    <Button className="bg-warning hover:bg-warning/90 text-warning-foreground">
-                      <Printer className="h-4 w-4 mr-2" />
-                      In
-                    </Button>
-                  </div>
+                <div className="flex justify-end gap-3">
+                  <Button className="bg-primary hover:bg-primary/90 text-primary-foreground">
+                    <FileDown className="h-4 w-4 mr-2" />
+                    Tải xuống Excel
+                  </Button>
+                  <Button 
+                    className="bg-primary hover:bg-primary/90 text-primary-foreground"
+                    onClick={() => setShowCompanyExcelImport(true)}
+                  >
+                    <FileUp className="h-4 w-4 mr-2" />
+                    Tải lên Excel
+                  </Button>
                 </div>
 
                 {/* Data Table */}
@@ -255,108 +200,19 @@ export const CompanyDataPopup = ({ open, onOpenChange, type, defaultTab = "compa
                   </p>
                 </div>
 
-                {/* Vehicle Filters */}
-                <div className="flex gap-4 items-center flex-wrap">
-                  <Select value={company} onValueChange={setCompany}>
-                    <SelectTrigger className={`w-[200px] ${!company ? 'text-muted-foreground' : ''}`}>
-                      <SelectValue placeholder="Chọn Công ty" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="viettel-telecom">Viettel Telecom</SelectItem>
-                      <SelectItem value="viettel-tuyen-quang">Viettel Tuyên Quang</SelectItem>
-                    </SelectContent>
-                  </Select>
-
-                  <Select value={vehicleType} onValueChange={setVehicleType}>
-                    <SelectTrigger className={`w-[200px] ${!vehicleType ? 'text-muted-foreground' : ''}`}>
-                      <SelectValue placeholder="Chọn Loại phương tiện" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="xe-tai">Xe tải</SelectItem>
-                      <SelectItem value="xe-con">Xe con</SelectItem>
-                      <SelectItem value="xe-khach">Xe khách</SelectItem>
-                    </SelectContent>
-                  </Select>
-
-                  <Select value={transportType} onValueChange={setTransportType}>
-                    <SelectTrigger className={`w-[230px] ${!transportType ? 'text-muted-foreground' : ''}`}>
-                      <SelectValue placeholder="Chọn Loại hình vận tải" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="truyen-ccs">Xe tải (Truyền CCS)</SelectItem>
-                      <SelectItem value="khong-truyen">Xe tải (Không truyền CCS)</SelectItem>
-                    </SelectContent>
-                  </Select>
-
-                  <Select value={licensePlate} onValueChange={setLicensePlate}>
-                    <SelectTrigger className={`w-[180px] ${!licensePlate ? 'text-muted-foreground' : ''}`}>
-                      <SelectValue placeholder="Chọn Biển kiểm soát" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="00A17795">00A17795</SelectItem>
-                      <SelectItem value="00B16543">00B16543</SelectItem>
-                    </SelectContent>
-                  </Select>
-
-                  <Select value={status} onValueChange={setStatus}>
-                    <SelectTrigger className={`w-[220px] ${!status ? 'text-muted-foreground' : ''}`}>
-                      <SelectValue placeholder="Chọn Trạng thái khai báo" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="tat-ca">Tất cả</SelectItem>
-                      <SelectItem value="thieu-thong-tin">Thiếu thông tin</SelectItem>
-                      <SelectItem value="du-thong-tin">Đủ thông tin</SelectItem>
-                    </SelectContent>
-                  </Select>
-
-                  <Button className="bg-primary hover:bg-primary/90 text-primary-foreground px-6">
-                    <Search className="h-4 w-4 mr-2" />
-                    Tìm kiếm
-                  </Button>
-                </div>
-
                 {/* Vehicle Action Buttons */}
-                <div className="flex gap-3 items-center justify-between">
-                  <div className="flex gap-3">
-                    <Button className="bg-primary hover:bg-primary/90 text-primary-foreground">
-                      <Plus className="h-4 w-4 mr-2" />
-                      Thêm phương tiện
-                    </Button>
-                    <Button 
-                      className="bg-primary hover:bg-primary/90 text-primary-foreground"
-                      onClick={() => setShowVehicleExcelImport(true)}
-                    >
-                      <Plus className="h-4 w-4 mr-2" />
-                      Thêm nhanh bằng Excel
-                    </Button>
-                  </div>
-                  
-                  {/* Export and Print Buttons */}
-                  <div className="flex gap-3">
-                    <div className="relative">
-                      <Button 
-                        className="bg-warning hover:bg-warning/90 text-warning-foreground"
-                        onClick={() => setShowExportMenu(!showExportMenu)}
-                      >
-                        <FileDown className="h-4 w-4 mr-2" />
-                        Xuất file
-                      </Button>
-                      {showExportMenu && (
-                        <div className="absolute top-full right-0 mt-1 bg-background border rounded-md shadow-lg z-50 min-w-[120px]">
-                          <button className="w-full px-4 py-2 text-left hover:bg-muted transition-colors">
-                            Excel
-                          </button>
-                          <button className="w-full px-4 py-2 text-left hover:bg-muted transition-colors">
-                            PDF
-                          </button>
-                        </div>
-                      )}
-                    </div>
-                    <Button className="bg-warning hover:bg-warning/90 text-warning-foreground">
-                      <Printer className="h-4 w-4 mr-2" />
-                      In
-                    </Button>
-                  </div>
+                <div className="flex justify-end gap-3">
+                  <Button className="bg-primary hover:bg-primary/90 text-primary-foreground">
+                    <FileDown className="h-4 w-4 mr-2" />
+                    Tải xuống Excel
+                  </Button>
+                  <Button 
+                    className="bg-primary hover:bg-primary/90 text-primary-foreground"
+                    onClick={() => setShowVehicleExcelImport(true)}
+                  >
+                    <FileUp className="h-4 w-4 mr-2" />
+                    Tải lên Excel
+                  </Button>
                 </div>
 
                 {/* Vehicle Data Table */}
@@ -432,6 +288,22 @@ export const CompanyDataPopup = ({ open, onOpenChange, type, defaultTab = "compa
                 </div>
               </>
             )}
+
+            {/* Commitment Checkbox */}
+            <div className="flex items-start gap-3 p-4 bg-muted/30 rounded-lg">
+              <Checkbox 
+                id="commitment"
+                checked={isCommitted}
+                onCheckedChange={(checked) => setIsCommitted(checked as boolean)}
+                className="mt-1"
+              />
+              <label 
+                htmlFor="commitment" 
+                className="text-sm cursor-pointer leading-relaxed"
+              >
+                Tôi cam kết các thông tin khai báo là chính xác. Nếu có sai lệch, tôi hoàn toàn chịu trách nhiệm với BCA.
+              </label>
+            </div>
 
             {/* Action Buttons */}
             <div className="flex gap-3 justify-center pt-4">
