@@ -103,31 +103,31 @@ export const WarningPopup = ({ open, onOpenChange }: WarningPopupProps) => {
               <div className="flex gap-4 items-center">
                 <Button 
                   variant="destructive"
-                  className="h-20 flex-col gap-1 min-w-[180px]"
+                  className="h-32 flex-col gap-2 min-w-[220px]"
                   onClick={() => {
                     setCompanyDataType("company");
                     setShowCompanyDataPopup(true);
                   }}
                 >
-                  <span className="text-2xl font-bold">2</span>
-                  <div className="flex items-center gap-2">
-                    <Factory className="h-6 w-6" />
-                    <span>Doanh nghiệp</span>
+                  <span className="text-4xl font-bold">2</span>
+                  <div className="flex items-center gap-3">
+                    <Factory className="h-8 w-8" />
+                    <span className="text-lg">Doanh nghiệp</span>
                   </div>
                 </Button>
                 
                 <Button 
                   variant="default"
-                  className="h-20 flex-col gap-1 min-w-[180px] bg-success hover:bg-success/90"
+                  className="h-32 flex-col gap-2 min-w-[220px] bg-success hover:bg-success/90"
                   onClick={() => {
                     setCompanyDataType("vehicle");
                     setShowCompanyDataPopup(true);
                   }}
                 >
-                  <CheckCircle2 className="h-6 w-6" />
-                  <div className="flex items-center gap-2">
-                    <Car className="h-6 w-6" />
-                    <span>Phương tiện</span>
+                  <CheckCircle2 className="h-8 w-8" />
+                  <div className="flex items-center gap-3">
+                    <Car className="h-8 w-8" />
+                    <span className="text-lg">Phương tiện</span>
                   </div>
                 </Button>
               </div>
@@ -233,8 +233,10 @@ export const WarningPopup = ({ open, onOpenChange }: WarningPopupProps) => {
       open={showCompanyDataPopup}
       onOpenChange={setShowCompanyDataPopup}
       type={companyDataType}
-      /*defaultTab="vehicle"*/
       defaultTab= {companyDataType === "company" ? "company" : "vehicle"}
+      onBack={() => {
+        setShowCompanyDataPopup(false);
+      }}
     />
     </>
   );

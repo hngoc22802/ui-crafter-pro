@@ -3,7 +3,7 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
-import { X, FileDown, FileUp, Info, RefreshCw } from "lucide-react";
+import { X, FileDown, FileUp, Info, RefreshCw, ArrowLeft } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { CompanyExcelImportPopup } from "./CompanyExcelImportPopup";
 import { VehicleExcelImportPopup } from "./VehicleExcelImportPopup";
@@ -13,9 +13,10 @@ interface CompanyDataPopupProps {
   onOpenChange: (open: boolean) => void;
   type: "company" | "vehicle";
   defaultTab?: "company" | "vehicle";
+  onBack?: () => void;
 }
 
-export const CompanyDataPopup = ({ open, onOpenChange, type, defaultTab = "company" }: CompanyDataPopupProps) => {
+export const CompanyDataPopup = ({ open, onOpenChange, type, defaultTab = "company", onBack }: CompanyDataPopupProps) => {
   const [activeTab, setActiveTab] = useState<"company" | "vehicle">(defaultTab);
   const [showEditCompanyPopup, setShowEditCompanyPopup] = useState(false);
   const [showEditVehiclePopup, setShowEditVehiclePopup] = useState(false);
@@ -68,22 +69,34 @@ export const CompanyDataPopup = ({ open, onOpenChange, type, defaultTab = "compa
           <div className="flex border-b">
             <button 
               onClick={() => setActiveTab("company")}
-              className={`px-6 py-3 font-semibold ${
+              className={`px-6 py-3 font-semibold flex items-center gap-2 ${
                 activeTab === "company" 
                   ? "bg-warning text-warning-foreground" 
                   : "bg-muted/30 hover:bg-muted/50"
               }`}
             >
+              {activeTab === "company" && onBack && (
+                <ArrowLeft className="h-4 w-4 cursor-pointer hover:opacity-80" onClick={(e) => {
+                  e.stopPropagation();
+                  onBack();
+                }} />
+              )}
               1. Thông tin doanh nghiệp
             </button>
             <button 
               onClick={() => setActiveTab("vehicle")}
-              className={`px-6 py-3 font-semibold ${
+              className={`px-6 py-3 font-semibold flex items-center gap-2 ${
                 activeTab === "vehicle" 
                   ? "bg-warning text-warning-foreground" 
                   : "bg-muted/30 hover:bg-muted/50"
               }`}
             >
+              {activeTab === "vehicle" && onBack && (
+                <ArrowLeft className="h-4 w-4 cursor-pointer hover:opacity-80" onClick={(e) => {
+                  e.stopPropagation();
+                  onBack();
+                }} />
+              )}
               2. Thông tin phương tiện
             </button>
           </div>
@@ -108,12 +121,12 @@ export const CompanyDataPopup = ({ open, onOpenChange, type, defaultTab = "compa
 
                 {/* Action Buttons */}
                 <div className="flex justify-end gap-3">
-                  <Button className="bg-primary hover:bg-primary/90 text-primary-foreground">
+                  <Button className="bg-blue-600 hover:bg-blue-700 text-white">
                     <FileDown className="h-4 w-4 mr-2" />
                     Tải xuống Excel
                   </Button>
                   <Button 
-                    className="bg-primary hover:bg-primary/90 text-primary-foreground"
+                    className="bg-blue-600 hover:bg-blue-700 text-white"
                     onClick={() => setShowCompanyExcelImport(true)}
                   >
                     <FileUp className="h-4 w-4 mr-2" />
@@ -202,12 +215,12 @@ export const CompanyDataPopup = ({ open, onOpenChange, type, defaultTab = "compa
 
                 {/* Vehicle Action Buttons */}
                 <div className="flex justify-end gap-3">
-                  <Button className="bg-primary hover:bg-primary/90 text-primary-foreground">
+                  <Button className="bg-blue-600 hover:bg-blue-700 text-white">
                     <FileDown className="h-4 w-4 mr-2" />
                     Tải xuống Excel
                   </Button>
                   <Button 
-                    className="bg-primary hover:bg-primary/90 text-primary-foreground"
+                    className="bg-blue-600 hover:bg-blue-700 text-white"
                     onClick={() => setShowVehicleExcelImport(true)}
                   >
                     <FileUp className="h-4 w-4 mr-2" />
